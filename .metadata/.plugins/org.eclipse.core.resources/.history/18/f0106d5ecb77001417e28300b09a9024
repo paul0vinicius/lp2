@@ -1,0 +1,14 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public class MeuSistemaSimplesDeTributacao {
+	public static boolean sair;
+	
+	public static void main(String args[]) {
+		while (!sair) {
+			System.out.println("-------- SISTEMA DE CADASTRO DE TRIBUTAÇÃO --------\n\n");
+			System.out.println("Qual profissão você exerce?");
+		}
+	}
+}

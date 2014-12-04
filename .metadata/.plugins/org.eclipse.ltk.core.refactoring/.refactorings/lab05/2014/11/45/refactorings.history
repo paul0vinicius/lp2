@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;lp2.lab05.CriaRobo&apos; to &apos;Main&apos;&#x0A;- Original project: &apos;lab05&apos;&#x0A;- Original element: &apos;lp2.lab05.CriaRobo&apos;&#x0A;- Renamed element: &apos;lp2.lab05.Main&apos;&#x0A;- Update references to refactored element&#x0A;- Rename similarly named elements&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;CriaRobo&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;lp2.lab05{CriaRobo.java[CriaRobo" matchStrategy="1" name="Main" qualified="false" references="true" similarDeclarations="true" stamp="1415416198986" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,119 @@
+package lp2.lab07;
+
+import org.junit.*;
+
+public class TestaCaminhoneiro {
+	private Caminhoneiro cam1;
+	private Caminhoneiro cam2;
+	private Caminhoneiro cam3;
+	private final int NAO_TEM_CARRO = 0, NAO_TEM_CASA = 0;
+	private final double VALOR_PADRAO_CASA = 50000, VALOR_PADRAO_CARRO = 20000;
+	private final double TONELADAS_ANO_ACIMA_TAXA_FIXA = 15.35;
+	private final double TONELADAS_ANO_ABAIXO_TAXA_FIXA = 8.75;
+	private final double QUILOMETROS_PERCORRIDOS = 10000;
+	private final double QUILOMETROS_PERCORRIDOS2 = 60000;
+	private final double QUILOMETROS_PERCORRIDOS3 = 8750.31;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		cam1 = new Caminhoneiro("Ricardo", "123-4", TONELADAS_ANO_ACIMA_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+		cam2 = new Caminhoneiro("Pedro", "123-5", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS2, NAO_TEM_CARRO, NAO_TEM_CASA);
+		cam3 = new Caminhoneiro("Ana Carolina", "123-6", TONELADAS_ANO_ACIMA_TAXA_FIXA, QUILOMETROS_PERCORRIDOS3, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+	}
+	
+	@Test
+	public void TestaConstrutor () throws Exception {
+		try {
+			new Caminhoneiro("", "123-4", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", "", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", null, TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro(null, "123-4", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", "123-4", -1, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser um número negativo.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os quilômetros percorridos e as toneladas não podem ser negativas.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", "123-4", TONELADAS_ANO_ABAIXO_TAXA_FIXA, -1, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser um número negativo.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os quilômetros percorridos e as toneladas não podem ser negativas.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", "123-4", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, -1, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser um número negativo.");
+		} catch (Exception e) {
+			Assert.assertEquals("O valor do carro não pode ser negativo.", e.getMessage());
+		}
+		
+		try {
+			new Caminhoneiro("Ricardo", "123-4", TONELADAS_ANO_ABAIXO_TAXA_FIXA, QUILOMETROS_PERCORRIDOS, NAO_TEM_CARRO, -1);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser um número negativo.");
+		} catch (Exception e) {
+			Assert.assertEquals("O valor da casa não pode ser negativo.", e.getMessage());
+		}
+		Assert.assertEquals("Ricardo", cam1.getNomeContribuinte());
+		Assert.assertEquals("123-4", cam1.getNumeroContribuinte());
+		Assert.assertEquals(VALOR_PADRAO_CARRO, cam1.getValorcarro(), 0.1);
+		Assert.assertEquals(VALOR_PADRAO_CASA, cam1.getValorcasa(), 0.1);
+		Assert.assertEquals(NAO_TEM_CARRO, cam2.getValorcarro(), 0.1);
+		Assert.assertEquals(NAO_TEM_CASA, cam2.getValorcasa(), 0.1);
+		Assert.assertEquals(VALOR_PADRAO_CARRO, cam3.getValorcarro(), 0.1);
+		Assert.assertEquals(VALOR_PADRAO_CASA, cam3.getValorcasa(), 0.1);
+		System.out.println(cam1.getListaCaminhoneiros());
+		System.out.println(Contribuinte.numeroDeContribuintes);
+		Assert.assertEquals(3, Contribuinte.numeroDeContribuintes);
+	}
+	
+	@Test
+	public void testaCalculaTributacao () {
+		Assert.assertEquals(1035, cam1.getTributacao(), 1);
+		Assert.assertEquals(500, cam2.getTributacao(), 1);
+	}
+	
+	@Test
+	public void testaDescontoTributacao () {
+		Assert.assertEquals(100, cam1.getDescontos(), 1);
+		Assert.assertEquals(600, cam2.getDescontos(), 1);
+		Assert.assertEquals(87.50, cam3.getDescontos(), 0.01);
+	}
+	
+	@Test
+	public void testaTributacaoTotal () {
+		Assert.assertEquals(935, cam1.getTributacaoTotal(), 1);
+		Assert.assertEquals(0, cam2.getTributacaoTotal(), 1);
+		Assert.assertEquals(947.50, cam3.getTributacaoTotal(), 0.01);
+	}
+	
+	@Test
+	public void testaLimiarRiqueza () throws Exception {
+		System.out.println(cam1.getRiquezaExcessiva());
+
+	}
+}

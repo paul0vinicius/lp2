@@ -1,0 +1,9 @@
+package lp2.lab08;
+
+public interface Estrategia {
+	
+	public abstract double calculaNotaNaMosca ();
+	
+	public abstract void selecionaComentariosRelevantes ();
+	
+}

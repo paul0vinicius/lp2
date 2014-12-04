@@ -1,0 +1,46 @@
+package lp2.lab08;
+
+import java.util.List;
+
+public class EstrategiaSimples extends Produto implements Estrategia  {
+	private Opiniao comentarioMaisRelevantePositivo;
+	private Opiniao comentarioMaisRelevanteNegativo;
+	
+	public EstrategiaSimples(Opiniao opiniao) {
+		super(opiniao);
+	}
+
+	@Override
+	public double calculaNotaNaMosca() {
+		int soma = 0;
+		for (Opiniao a: comentarios) {
+			soma += a.getNotaProduto();
+		}
+		int media = soma / comentarios.size();
+		return media;
+	}
+
+	@Override
+	public void selecionaComentariosRelevantes() {
+		int maior = comentarios.get(0).getNotaProduto();
+		int menor = comentarios.get(0).getNotaProduto();
+		for (Opiniao a: comentarios) {
+			if (a.getNotaProduto() > maior) {
+				maior = a.getNotaProduto();
+				comentarioMaisRelevantePositivo = a;
+			}
+			
+			if (a.getNotaProduto() < menor) {
+				menor = a.getNotaProduto();
+				comentarioMaisRelevanteNegativo = a;
+			}
+		}
+		
+		comentariosMaisRelevantes[0] = comentarioMaisRelevantePositivo.getComentario();
+		comentariosMaisRelevantes[1] = comentarioMaisRelevanteNegativo.getComentario();
+	}
+	
+	
+	
+	
+}

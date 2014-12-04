@@ -1,0 +1,62 @@
+package lp2.lab08;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Produto {
+	private String nomeProduto;
+	protected List<Opiniao> opinioesProduto;
+	protected List<Opiniao> opinioesMaisRelevantesSazonal;
+	protected double notaNaMosca;
+	protected String[] comentariosMaisRelevantes;
+	private Estrategia formaAvaliar = new EstrategiaSimples();
+	
+	public Produto (String nome) throws Exception {
+		lancaExcecoesNome(nome);
+		opinioesProduto = new ArrayList<Opiniao>();
+		opinioesMaisRelevantesSazonal = new ArrayList<Opiniao>();
+		this.nomeProduto = nome;
+		this.comentariosMaisRelevantes = new String[2];
+	}
+	
+	public void adicionaOpinioes (Opiniao opiniao) {
+		opinioesProduto.add(opiniao);
+	}
+	
+	public double getNotaNaMosca () {
+		return formaAvaliar.calculaNotaNaMosca(opinioesProduto);
+	}
+	
+	public String getComentarios () throws Exception {
+		String comentarios = formaAvaliar.selecionaComentariosRelevantes(opinioesProduto);
+		if (comentarios == null) {
+			throw new Exception("Não existem comentários relevantes.");
+		}
+		return comentarios;
+	}
+	
+	public String getNome () {
+		return nomeProduto;
+	}
+	
+	public List<Opiniao> getOpinioesRelevantes () {
+		return formaAvaliar.getOpinioesMaisRelevantes(opinioesProduto);
+	}
+	
+	public List<Opiniao> getOpinioesProduto () {
+		return opinioesProduto;
+	}
+	
+	public void setFormaVisualizacao (Estrategia novaEstrategia) {
+		formaAvaliar = novaEstrategia;
+	}
+	
+	private void lancaExcecoesNome (String nome) throws Exception {
+		if (nome == "" || nome == null) {
+			throw new Exception("O nome do produto não pode ser vazio ou nulo.");
+		}
+	}
+	
+	
+	
+}

@@ -1,0 +1,54 @@
+package lp2.lab07;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Taxista extends Rodoviarios {
+	private double passageiros;
+	private static double limiarRiquezaTax;
+	private static double somaBensTaxistas;
+	public static List<Taxista> taxistas = new ArrayList<Taxista>();
+	
+	public Taxista(String nomeContribuinte, String numeroContribuinte, double quilometrosPercorridos, double passageiros) throws Exception {
+		super(nomeContribuinte, numeroContribuinte, quilometrosPercorridos);
+		this.passageiros = passageiros;
+		calculaTributacao();
+		descontoTributacao();
+		if (!verificaSeExiste(nomeContribuinte, numeroContribuinte)) taxistas.add(this);
+	}
+	
+	@Override
+	public void calculaTributacao() {
+		tributacao = passageiros * 0.5;
+	}
+
+	@Override
+	public void descontoTributacao() {
+		
+	}
+
+	@Override
+	public void limiarRiqueza() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private boolean verificaSeExiste (String nome, String numero) {
+		for (Taxista a: taxistas) {
+			if (a.getNomeContribuinte().equals(nome) || a.getNumeroContribuinte().equals(numero)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void atualizaLimiar () {
+		for (Taxista a: taxistas) {
+			somaBensTaxistas += (a.getValorcarro() + a.getValorcasa());
+			System.out.println("aqui " + somaBensTaxistas);
+		}
+		System.out.println(somaBensTaxistas);
+		limiarRiquezaTax = (somaBensTaxistas / taxistas.size()) * 1.5;
+	}
+
+}

@@ -1,0 +1,42 @@
+package lp2.lab07;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Caminhoneiro extends Rodoviarios {
+	private static final int IMPOSTO_FIXO = 500;
+	private double toneladasAno;
+	private List<Caminhoneiro> caminhoneiros = new ArrayList<Caminhoneiro>();
+	
+	public Caminhoneiro (String nomeContribuinte, String numeroContribuinte, double toneladasAno, double quilometros_percorridos, double valorCarro, double valorCasa) throws Exception {
+		super(nomeContribuinte, numeroContribuinte, quilometros_percorridos, valorCarro, valorCasa);
+		if (verificaSeENegativo(toneladasAno)) {
+			throw new Exception("Os quilômetros percorridos e as toneladas não podem ser negativas.");
+		}
+		this.toneladasAno = toneladasAno;
+		calculaTributacao();
+		descontoTributacao();
+		if (!verificaSeExiste(nomeContribuinte, numeroContribuinte)) {
+			caminhoneiros.add(this);
+			numeroDeContribuintes++;
+		}
+	}
+
+	@Override
+	protected void calculaTributacao() {
+		if (toneladasAno <= 10) this.tributacao = IMPOSTO_FIXO;
+		else this.tributacao = IMPOSTO_FIXO + (toneladasAno - 10) * 100;
+	}
+	
+	@Override
+	public String toString () {
+		return "Nome: " + getNomeContribuinte() + " - Número de contribuinte: " + getNumeroContribuinte();
+	}
+	
+	private boolean verificaSeENegativo (double numero) {
+		if (numero < 0) {
+			return true;
+		}
+		return false;
+	}
+}

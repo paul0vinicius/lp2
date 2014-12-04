@@ -1,0 +1,74 @@
+package lp2.lab07;
+
+import org.junit.*;
+
+public class TestaTaxista {
+	private Taxista taxi1, taxi2, taxi3;
+	private final int NAO_TEM_CARRO = 0, NAO_TEM_CASA = 0;
+	private final double VALOR_PADRAO_CASA = 50000, VALOR_PADRAO_CARRO = 20000, VALOR_ACIMA_CASA = 800000, VALOR_ACIMA_CARRO = 200000;
+	private final double QUILOMETROS_PERCORRIDOS = 15000;
+	private final double QUILOMETROS_PERCORRIDOS2 = 73200.29;
+	private final double QUILOMETROS_PERCORRIDOS3 = 8750.31;
+	private final int PASSAGEIROS_1 = 1200;
+	private final int PASSAGEIROS_2 = 900;
+	private final int PASSAGEIROS_3 = 700;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		taxi1 = new Taxista("Eliana", "2125-4", QUILOMETROS_PERCORRIDOS, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+		taxi2 = new Taxista("Angelica", "2125-8", QUILOMETROS_PERCORRIDOS2, PASSAGEIROS_2, VALOR_ACIMA_CARRO, VALOR_ACIMA_CASA);
+		taxi3 = new Taxista("Motta", "2126-3", QUILOMETROS_PERCORRIDOS3, PASSAGEIROS_3, NAO_TEM_CARRO, NAO_TEM_CASA);
+	}
+	
+	@Test
+	public void testaConstrutor () throws Exception {
+		try {
+			new Taxista("", "2125-4", QUILOMETROS_PERCORRIDOS, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Taxista(null, "2125-4", QUILOMETROS_PERCORRIDOS, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Taxista("Rosa Eliana", "", QUILOMETROS_PERCORRIDOS, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Taxista("Rosa Eliana", null, QUILOMETROS_PERCORRIDOS, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O nome não pode ser vazio ou null, nem o número de cadastro.", e.getMessage());
+		}
+		
+		try {
+			new Taxista("Rosa Eliana", "2125-4", -10, PASSAGEIROS_1, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os quilômetros percorridos não podem ser negativos.", e.getMessage());
+		}
+		
+		try {
+			new Taxista("Rosa Eliana", "2125-4", QUILOMETROS_PERCORRIDOS, -10, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+			Assert.fail("Deve lançar exceção porque o nome não deve ser uma String vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("O número de passageiros não pode ser negativo.", e.getMessage());
+		}
+		
+		Assert.assertEquals("Eliana", taxi1.getNomeContribuinte());
+		Assert.assertEquals("Angelica", taxi2.getNomeContribuinte());
+		Assert.assertEquals("Motta", taxi3.getNomeContribuinte());
+		Assert.assertEquals("2125-4", taxi1.getNumeroContribuinte());
+		Assert.assertEquals("2125-8", taxi2.getNumeroContribuinte());
+		Assert.assertEquals("2126-3", taxi3.getNumeroContribuinte());
+	}
+}

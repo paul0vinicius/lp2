@@ -1,0 +1,27 @@
+package lp2.lab08;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Produto {
+	protected List<Opiniao> comentarios;
+	protected double notaNaMosca;
+	protected String[] comentariosMaisRelevantes;
+	private Estrategia formaAvaliar;
+	
+	public Produto () {
+		comentarios = new ArrayList<Opiniao>();
+		this.comentariosMaisRelevantes = new String[2];
+	}
+	
+	public void adicionaOpinioes (Opiniao opiniao) {
+		comentarios.add(opiniao);
+	}
+	
+	public void setFormaVisualizacao (Estrategia novaEstrategia) {
+		formaAvaliar = novaEstrategia;
+	}
+	
+	
+	
+}

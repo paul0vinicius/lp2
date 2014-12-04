@@ -1,0 +1,44 @@
+package lp2.lab08;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Produto {
+	protected List<Opiniao> opinioesProduto;
+	protected double notaNaMosca;
+	protected String[] comentariosMaisRelevantes;
+	private Estrategia formaAvaliar = new EstrategiaSimples();
+	
+	public Produto () {
+		opinioesProduto = new ArrayList<Opiniao>();
+		this.comentariosMaisRelevantes = new String[2];
+	}
+	
+	public void adicionaOpinioes (Opiniao opiniao) {
+		opinioesProduto.add(opiniao);
+	}
+	
+	public double getNotaNaMosca () {
+		return formaAvaliar.calculaNotaNaMosca(opinioesProduto);
+	}
+	
+	public String getComentarios () throws Exception {
+		List<Opiniao> comentarios = formaAvaliar.selecionaComentariosRelevantes(opinioesProduto);
+		if (comentarios == null) {
+			throw new Exception("Não existem comentários relevantes.");
+		}
+		return "Comentário com avaliação mais positiva: \n" + "Nota: " + comentarios.get(0).getNotaProduto() + " || Comentário: " + comentarios.get(0).getComentario()
+				+ "\n\nComentário com avaliação mais negativa: \n" + "Nota: " + comentarios.get(1).getNotaProduto() + " || Comentário: " + comentarios.get(1).getComentario();
+	}
+	
+	public List<Opiniao> getOpinioesProduto () {
+		return opinioesProduto;
+	}
+	
+	public void setFormaVisualizacao (Estrategia novaEstrategia) {
+		formaAvaliar = novaEstrategia;
+	}
+	
+	
+	
+}

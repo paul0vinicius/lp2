@@ -1,0 +1,72 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public class Caminhoneiro extends Rodoviarios {
+	private static final int IMPOSTO_FIXO = 500;
+	private double toneladasAno;
+	private static double limiarRiquezaCam;
+	private static double somaBensCaminhoneiros;
+	public static List<Caminhoneiro> caminhoneiros = new ArrayList<Caminhoneiro>();
+	
+	public Caminhoneiro (String nomeContribuinte, String numeroContribuinte, double toneladasAno, double quilometros_percorridos, double valorCarro, double valorCasa) throws Exception {
+		super(nomeContribuinte, numeroContribuinte, quilometros_percorridos, valorCarro, valorCasa);
+		if (verificaSeENegativo(toneladasAno)) {
+			throw new Exception("Os quilômetros percorridos e as toneladas não podem ser negativas.");
+		}
+		this.toneladasAno = toneladasAno;
+		calculaTributacao();
+		descontoTributacao();
+		if (!verificaSeExiste(nomeContribuinte, numeroContribuinte)) {
+			caminhoneiros.add(this);
+			super.numeroDeContribuintes++;
+		}
+	}
+
+	@Override
+	protected void calculaTributacao() {
+		if (toneladasAno <= 10) this.tributacao = IMPOSTO_FIXO;
+		else this.tributacao = IMPOSTO_FIXO + (toneladasAno - 10) * 100;
+	}
+
+	@Override
+	public void limiarRiqueza() {
+		atualizaLimiar();
+		if (getSinaisRiquezas() >= limiarRiquezaCam) setRiquezaExcessiva(true);
+		else setRiquezaExcessiva(false);
+	}
+	
+	@Override
+	public String toString () {
+		return "Nome: " + getNomeContribuinte() + " - Número de contribuinte: " + getNumeroContribuinte();
+	}
+	
+	private boolean verificaSeExiste (String nome, String numero) {
+		for (Caminhoneiro a: caminhoneiros) {
+			if (a.getNomeContribuinte().equals(nome) || a.getNumeroContribuinte().equals(numero)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean verificaSeENegativo (double numero) {
+		if (numero < 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static void atualizaLimiar () {
+		for (Caminhoneiro a: caminhoneiros) {
+			somaBensCaminhoneiros += (a.getValorcarro() + a.getValorcasa());
+			System.out.println("aqui " + somaBensCaminhoneiros);
+		}
+		System.out.println(somaBensCaminhoneiros);
+		limiarRiquezaCam = (somaBensCaminhoneiros / caminhoneiros.size()) * 1.5;
+	}
+	
+	public double getLimiarRiqueza () {
+		return limiarRiquezaCam;
+	}
+}

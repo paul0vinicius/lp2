@@ -1,0 +1,63 @@
+package lp2.lab08;
+
+import java.util.*;
+
+public class EstrategiaSazonal implements Estrategia {
+	private List<Opiniao> opinioesMaisRecentes = new ArrayList<Opiniao>();
+	
+	@Override
+	public double calculaNotaNaMosca (List<Opiniao> opinioes) {
+		if (opinioes.size() < 1) return 0;
+		else if (opinioes.size() < 4) {
+			for (int i = 0; i < opinioes.size(); i++){
+				opinioesMaisRecentes.add(opinioes.get(i));
+			}
+			return calculaMedia(opinioesMaisRecentes);
+		}
+		else {
+			selecionaOpinioesMaisRecentes(opinioes);
+			System.out.println(opinioesMaisRecentes);
+			return calculaMedia(opinioesMaisRecentes);
+		}
+	}
+	
+	@Override
+	public String selecionaComentariosRelevantes (List<Opiniao> opinioes) {
+		selecionaOpinioesMaisRecentes(opinioes);
+		if (opinioesMaisRecentes.size() < 1) return null;
+		else if (opinioesMaisRecentes.size() < 2) {
+			
+			return "Comentário mais relevante: " + "\nNota: " + opinioesMaisRecentes.get(0).getNotaProduto() + " || Comentário: " + opinioesMaisRecentes.get(0).getComentario();
+		}
+		
+		return "\nComentários mais relevantes: " + "\nNota: " + opinioesMaisRecentes.get(0).getNotaProduto() + " || Comentário: " + opinioesMaisRecentes.get(0).getComentario()
+				+ " || Data do comentário: " + opinioesMaisRecentes.get(0).getDataDoComentario()
+				+ "\nNota: " + opinioesMaisRecentes.get(1).getNotaProduto() + " || Comentário: " + opinioesMaisRecentes.get(1).getComentario()
+				+ " || Data do comentário: " + opinioesMaisRecentes.get(1).getDataDoComentario();
+	}
+	
+	private double calculaMedia (List<Opiniao> opinioesMaisRecentes) {
+		int soma = 0;
+		for (Opiniao a: opinioesMaisRecentes) {
+			soma += a.getNotaProduto();
+		}
+		
+		return soma / opinioesMaisRecentes.size();
+	}
+	
+	private void selecionaOpinioesMaisRecentes (List<Opiniao> opinioes) {
+		List<Opiniao> copiaOpinioes = opinioes; // faz uma cópia de opiniões porque haverá alteração na lista.
+		for (int i = 0; i < 3; i++) {
+			Date DataMaisAtual = copiaOpinioes.get(0).getDataDoComentario();
+			Opiniao opiniaoMaisAtual = copiaOpinioes.get(0);
+			for (Opiniao a: copiaOpinioes) {
+				if (a.getDataDoComentario().after(DataMaisAtual)) {
+					DataMaisAtual = a.getDataDoComentario();
+					opiniaoMaisAtual = a;
+				}
+			}
+			opinioesMaisRecentes.add(opiniaoMaisAtual);
+			copiaOpinioes.remove(opiniaoMaisAtual);
+		}
+	}
+}

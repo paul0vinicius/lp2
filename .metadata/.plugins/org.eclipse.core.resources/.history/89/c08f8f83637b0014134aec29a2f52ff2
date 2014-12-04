@@ -1,0 +1,60 @@
+package lp2.lab08;
+
+import java.util.*;
+
+public class EstrategiaSimples implements Estrategia  {
+	private Opiniao comentarioMaisRelevantePositivo;
+	private Opiniao comentarioMaisRelevanteNegativo;
+
+	@Override
+	public double calculaNotaNaMosca(List<Opiniao> opinioes) {
+		if (opinioes.size() < 1) return 0;
+		
+		int soma = 0;
+		for (Opiniao a: opinioes) {
+			soma += a.getNotaProduto();
+		}
+		int media = soma / opinioes.size();
+		return media;
+	}
+
+	@Override
+	public String selecionaComentariosRelevantes(List<Opiniao> opinioes) {
+		if (opinioes.size() < 1) {
+			return null;
+		}
+		if (opinioes.size() == 1) {
+			return "Comentário mais relevante: " + "\nNota: " + opinioes.get(0).getNotaProduto()
+					+ " || Comentário: " + opinioes.get(0).getComentario();
+
+		}
+		int maior = opinioes.get(0).getNotaProduto();
+		int menor = opinioes.get(0).getNotaProduto();
+		comentarioMaisRelevantePositivo = opinioes.get(0);
+		comentarioMaisRelevanteNegativo = opinioes.get(0);
+		for (Opiniao a: opinioes) {
+			if (a.getNotaProduto() > maior) {
+				maior = a.getNotaProduto();
+				comentarioMaisRelevantePositivo = a;
+			}
+			else if (a.getNotaProduto() == maior) {
+				if (a.getDataDoComentario().before(comentarioMaisRelevantePositivo.getDataDoComentario())) {
+					comentarioMaisRelevantePositivo = a;
+				}
+			}
+			
+			if (a.getNotaProduto() < menor) {
+				menor = a.getNotaProduto();
+				comentarioMaisRelevanteNegativo = a;
+			}
+			
+			else if (a.getNotaProduto() == menor) {
+				if (a.getDataDoComentario().before(comentarioMaisRelevanteNegativo.getDataDoComentario())) {
+					comentarioMaisRelevanteNegativo = a;
+				}
+			}
+		}
+		return "Comentário com avaliação mais positiva: \n" + "Nota: " + comentarioMaisRelevantePositivo.getNotaProduto() + " || Comentário: " + comentarioMaisRelevantePositivo.getComentario()
+		+ "\n\nComentário com avaliação mais negativa: \n" + "Nota: " + comentarioMaisRelevanteNegativo.getNotaProduto() + " || Comentário: " + comentarioMaisRelevanteNegativo.getComentario() + "\n";
+	}	
+}

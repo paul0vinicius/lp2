@@ -1,0 +1,25 @@
+package lp2.lab07;
+
+public class Taxista extends Rodoviarios {
+	
+	public Taxista(String nomeContribuinte, String numeroContribuinte) throws Exception {
+		super(nomeContribuinte, numeroContribuinte);
+	}
+	
+	@Override
+	public double calculaTributacao(double passageiros) {
+		return passageiros * 0.5;
+	}
+	
+	@Override
+	public double sinaisRiquezaExterior () {
+		return 0;
+	}
+
+	@Override
+	public double descontoTributacao(double desconto_taxista) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

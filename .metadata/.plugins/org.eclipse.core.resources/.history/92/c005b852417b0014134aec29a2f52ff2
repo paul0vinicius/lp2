@@ -1,0 +1,71 @@
+package lp2.lab08;
+
+import org.junit.*;
+import java.util.*;
+
+public class TestaOpiniao {
+	private final String COMENTARIO_VALIDO = "Achei o produto bastante eficiente, "
+			+ "rápido, simples de ser manuseado e muito prático.";
+	private final String COMENTARIO_INVALIDO = "Achei o produto bastante eficiente, "
+			+ "rápido, simples de ser manuseado e muito prático. Mas, infelizmente, "
+			+ "não pude adquirir um produto deste tipo devido ao seu preço. Por favor, "
+			+ "diminuam o preço para que pessoas como eu também possam ser incluídas na "
+			+ "lista de clientes felizes que possuem tal mercadoria. Abraços, Sonia.";
+	private final String STRING_VAZIA = "";
+	private Opiniao opiniao1;
+	private final int NOTA_PADRAO = 1;
+	private GregorianCalendar calendario;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		opiniao1 = new Opiniao(NOTA_PADRAO, COMENTARIO_VALIDO);
+		calendario = new GregorianCalendar();
+	}
+	
+	@Test
+	public void testaConstrutor () {
+		try {
+			new Opiniao(-3, COMENTARIO_VALIDO);
+			Assert.fail("Deve lançar exceção: Nota Inválida.");
+		} catch (Exception e) {
+			Assert.assertEquals("A nota deve estar entre -2 e 2.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(3, COMENTARIO_VALIDO);
+			Assert.fail("Deve lançar exceção: Nota Inválida.");
+		} catch (Exception e) {
+			Assert.assertEquals("A nota deve estar entre -2 e 2.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(2, STRING_VAZIA);
+			Assert.fail("Deve lançar exceção: Comentário inválido.");
+		} catch (Exception e) {
+			Assert.assertEquals("O comentário não pode ser uma string vazia ou nulo.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(2, null);
+			Assert.fail("Deve lançar exceção: Comentário inválido.");
+		} catch (Exception e) {
+			Assert.assertEquals("O comentário não pode ser uma string vazia ou nulo.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(2, COMENTARIO_INVALIDO);
+			Assert.fail("Deve lançar exceção: Comentário inválido.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os caracteres não devem ultrapassar a quantidade de 140.", e.getMessage());
+		}
+		
+		Assert.assertEquals(NOTA_PADRAO, opiniao1.getNotaProduto());
+		Assert.assertEquals(COMENTARIO_VALIDO, opiniao1.getComentario());
+		Assert.assertEquals(calendario.getTime(), opiniao1.getDataDoComentario());
+	}
+	
+	@Test
+	public void testaToString () {
+		Assert.assertEquals("Nota: 1\nComentário: Achei o produto bastante eficiente, rápido, simples de ser manuseado e muito prático.", opiniao1.toString());
+	}
+}

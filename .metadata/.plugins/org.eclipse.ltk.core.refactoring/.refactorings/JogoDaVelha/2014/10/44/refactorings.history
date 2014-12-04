@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Convert local variable &apos;lp2.lab03.JogoDaVelhaCampeonato.IdentificaJogadores().entrada&apos; in &apos;lp2.lab03.JogoDaVelhaCampeonato.IdentificaJogadores()&apos; to field&#x0A;- Original project: &apos;JogoDaVelha&apos;&#x0A;- Original element: &apos;lp2.lab03.JogoDaVelhaCampeonato.IdentificaJogadores().entrada&apos;&#x0A;- Field name: &apos;entrada&apos;&#x0A;- Initialize field in method&#x0A;- Declared visibility: &apos;private&apos;&#x0A;- Declare field &apos;static&apos;" description="Convert local variable &apos;entrada&apos; to field" final="false" flags="2" id="org.eclipse.jdt.ui.promote.temp" initialize="1" input="/src&lt;lp2.lab03{JogoDaVelhaCampeonato.java" name="entrada" selection="5478 32" stamp="1414443875183" static="true" version="1.0" visibility="2"/>
+</session>

@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Pessoa {
+
+	private String nome;
+	private String cpf;
+	
+	public Pessoa(String nome, String cpf) {
+		this.nome = nome;
+		this.cpf = cpf;
+	}
+	
+	public String checkName(){
+		return nome;
+	}
+	
+	public String checkCPF(){
+		return cpf;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// Scanner input = new Scanner(System.in);
+		Pessoa maria = new Pessoa("Maria", "111");
+		
+		System.out.println(maria.nome);
+		System.out.println(maria.cpf);
+		
+		
+		
+	}
+
+}

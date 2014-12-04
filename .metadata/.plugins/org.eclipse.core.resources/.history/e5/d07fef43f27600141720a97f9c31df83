@@ -1,0 +1,37 @@
+package lp2.lab07;
+
+public class Professores extends Contribuinte {
+	private final static double TRIBUTACAO_UM_SALARIO = 0.05;
+	private final static double TRIBUTACAO_ATE_CINCO_SALARIOS = 0.1;
+	private final static double TRIBUTACAO_ACIMA_CINCO_SALARIOS = 0.2;
+	private final static double SALARIO_MINIMO_BRUTO = 724.0;
+	
+	public Professores(String nomeContribuinte, String numeroContribuinte, double salario) {
+		super(nomeContribuinte, numeroContribuinte);
+	}
+
+	@Override
+	public double calculaTributacao(double salario) {
+		if (salario / SALARIO_MINIMO_BRUTO <= 1) {
+			return salario * TRIBUTACAO_UM_SALARIO;
+		}
+		else if (salario / SALARIO_MINIMO_BRUTO > 1 && salario / SALARIO_MINIMO_BRUTO <= 5) {
+			return salario * TRIBUTACAO_ATE_CINCO_SALARIOS;
+		}
+		else return salario * TRIBUTACAO_ACIMA_CINCO_SALARIOS;
+	}
+
+	@Override
+	public double descontoTributacao(double gastoMaterial) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double sinaisRiquezaExterior() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
+}

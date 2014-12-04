@@ -1,0 +1,88 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public class Taxista extends Rodoviarios {
+	private int passageiros;
+	private static double somaBensTaxistas;
+	private static double limiarRiquezaTax;
+	public static List<Taxista> taxistas = new ArrayList<Taxista>();
+	
+	public Taxista(String nomeContribuinte, String numeroContribuinte, double quilometrosPercorridos, int passageiros, double valorCarro, double valorCasa) throws Exception {
+		super(nomeContribuinte, numeroContribuinte, quilometrosPercorridos, valorCarro, valorCasa);
+		if (passageiros < 0) {
+			throw new Exception("O número de passageiros não pode ser negativo.");
+		}
+		this.passageiros = passageiros;
+		calculaTributacao();
+		descontoTributacao();
+		if (!verificaSeExiste(nomeContribuinte, numeroContribuinte)) {
+			taxistas.add(this);
+			numeroDeContribuintes++;
+		}
+	}
+	
+	@Override
+	public void calculaTributacao() {
+		tributacao = passageiros * 0.5;
+	}
+	
+	private boolean verificaSeExiste (String nome, String numero) {
+		for (Taxista a: taxistas) {
+			if (a.getNomeContribuinte().equals(nome) || a.getNumeroContribuinte().equals(numero)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void limiarRiqueza () {
+		atualizaContribuintesLimiarRiqueza();
+	}
+	
+	private static void atualizaLimiarRiqueza () {
+		somaBensTaxistas = 0.0;
+		limiarRiquezaTax = 0.0;
+		for (Taxista a: taxistas) {
+			somaBensTaxistas += (a.sinaisRiqueza);
+		}
+		limiarRiquezaTax = (somaBensTaxistas / taxistas.size()) * 1.5;
+	}
+	
+	public static void atualizaContribuintesLimiarRiqueza () {
+		atualizaLimiarRiqueza();
+		for (Taxista a: taxistas) {
+			if (a.sinaisRiqueza >= limiarRiquezaTax) {
+				a.setRiquezaExcessiva(true);
+			}
+		}
+	}
+	
+	public int getPassageiros () {
+		return passageiros;
+	}
+	
+	public static int getNumeroDeTaxistas () {
+		return taxistas.size();
+	}
+	
+	@Override
+	public boolean equals (Object obj) {
+		if (!(obj instanceof Taxista)) {
+			return false;
+		}
+		Taxista outroTaxista = (Taxista) obj;
+		return outroTaxista.getNomeContribuinte().equals(getNomeContribuinte()) && outroTaxista.getNumeroContribuinte().equals(getNumeroContribuinte());
+	}
+	
+	public static String consultaContribuinte (String nome, String numeroContr) {
+		for (Taxista a: taxistas) {
+			if (nome.equals(a.getNomeContribuinte()) && numeroContr.equals(a.getNumeroContribuinte())) {
+				return "Nome: " + a.getNomeContribuinte() + " - Número de contribuinte: " + a.getNumeroContribuinte() +
+						"\nTributação bruta: R$ " + a.getTributacao() + "\nDescontos: R$ " + a.getDescontos() + "\nTributação Total: R$ " + a.getTributacaoTotal() + "\n";
+			}
+		}
+		return "Pessoa não encontrada.";
+	}
+}

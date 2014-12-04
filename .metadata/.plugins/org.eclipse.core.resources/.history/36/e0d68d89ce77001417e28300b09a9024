@@ -1,0 +1,60 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public class MeuSistemaSimplesDeTributacao {
+	private static boolean sair;
+	private static Scanner entradaInt;
+	private static Scanner entradaString;
+	
+	public static void main(String args[]) throws Exception {
+		entradaInt = new Scanner(System.in);
+		entradaString = new Scanner(System.in);
+		
+		while (!sair) {
+			System.out.println("-------- SISTEMA DE CADASTRO DE TRIBUTAÇÃO --------\n");
+			System.out.println("Selecione uma das opções abaixo: ");
+			System.out.println("1. Cadastrar contribuintes.");
+			System.out.println("2. Calcular impostos de um determinado contribuinte.");
+			System.out.println("3. Listar os contribuintes em ordem de riqueza.");
+			int opcao1 = entradaInt.nextInt();
+			
+			switch(opcao1) {
+			case 1:
+				System.out.println("Qual profissão você exerce?");
+				System.out.println("1. Taxista");
+				System.out.println("2. Caminhoneiro");
+				System.out.println("3. Médico");
+				System.out.println("4. Professor");
+				int opcao2 = entradaInt.nextInt();
+			
+			case 2:
+				System.out.println("Qual profissão você deseja consultar?");
+				System.out.println("1. Taxista");
+				System.out.println("2. Caminhoneiro");
+				System.out.println("3. Médico");
+				System.out.println("4. Professor");
+				int opcao3 = entradaInt.nextInt();
+			
+			switch(opcao2) {
+			case 1:
+				System.out.println("Digite o nome de contribuinte: ");
+				String nomeContribuinte = entradaString.nextLine();
+				System.out.println("Digite o número de contribuinte: ");
+				String numeroContribuinte = entradaString.nextLine();
+				System.out.println("Quilômetros percorridos no ano: ");
+				int kmPercorridos = entradaInt.nextInt();
+				System.out.println("Passageiros transportados no ano: ");
+				int passageiros = entradaInt.nextInt();
+				System.out.println("Possui carro? Se sim, digite o valor. Se não, digite 0. ");
+				int valorCarro = entradaInt.nextInt();
+				System.out.println("Possui casa? Se sim, digite o valor. Se não, digite 0. ");
+				int valorCasa = entradaInt.nextInt();
+				new Taxista(nomeContribuinte, numeroContribuinte, kmPercorridos, passageiros, valorCarro, valorCasa);
+				System.out.println("Cadastrado com sucesso.");
+				break;
+			}
+			}
+		}
+	}
+}

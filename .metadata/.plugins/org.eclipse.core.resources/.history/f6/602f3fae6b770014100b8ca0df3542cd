@@ -1,0 +1,111 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public abstract class Contribuinte {
+	public static int numeroDeContribuintes = 0;
+	private String nomeContribuinte;
+	private String numero;
+	private boolean riquezaExcessiva;
+	private double somaBensContribuinte;
+	private double limiarRiquezaContribuintes;
+	private double valorCasa;
+	private double valorCarro;
+	private double sinaisRiqueza;
+	protected double tributacao;
+	protected double descontos;
+	protected List<Contribuinte> contribuintes;
+	
+	public Contribuinte (String nome, String numeroContribuinte, double valorCarro, double valorCasa) throws Exception {
+		 if (!checaString(nome, numeroContribuinte)){
+			throw new Exception("O nome não pode ser vazio ou null, nem o número de cadastro.");
+		}
+		this.valorCarro = valorCarro(valorCarro);
+		this.valorCasa = valorCasa(valorCasa);
+		this.sinaisRiqueza = this.valorCarro + this.valorCasa;
+		this.nomeContribuinte = nome;
+		this.numero = numeroContribuinte;
+	}
+	
+	private double valorCarro (double valorCarro) throws Exception {
+		if (!checaValor(valorCarro)) {
+			throw new Exception("O valor do carro não pode ser negativo.");
+		}
+		return valorCarro;
+	}
+	
+	private double valorCasa (double valorCasa) throws Exception {
+		if (!checaValor(valorCasa)) {
+			throw new Exception("O valor da casa não pode ser negativo.");
+		}
+		return valorCasa;
+	}
+	
+	public String getNomeContribuinte () {
+		return nomeContribuinte;
+	}
+	
+	public String getNumeroContribuinte () {
+		return numero;
+	}
+	
+	public double getValorcasa () {
+		return valorCasa;
+	}
+	
+	public double getValorcarro () {
+		return valorCarro;
+	}
+	
+	public double getTributacao () {
+		return tributacao;
+	}
+	
+	public double getDescontos () {
+		return descontos;
+	}
+	
+	public double getSinaisRiquezas () {
+		return sinaisRiqueza;
+	}
+
+	public double getTributacaoTotal () {
+		if (tributacao - descontos < 0) return 0;
+		else return tributacao - descontos;
+	}
+	
+	public boolean getRiquezaExcessiva () {
+		return riquezaExcessiva;
+	}
+	
+	public void setRiquezaExcessiva (boolean status) {
+		riquezaExcessiva = status;
+	}
+
+	protected abstract void calculaTributacao ();
+	
+	protected abstract void descontoTributacao ();
+	
+	public void limiarRiqueza () {
+		somaBensContribuinte = 0.0;
+		for (Contribuinte a: contribuintes) {
+			somaBensContribuinte += (a.getValorcarro() + a.getValorcasa());
+			System.out.println("aqui " + somaBensContribuinte);
+		}
+		System.out.println(somaBensContribuinte);
+		limiarRiquezaContribuintes = (somaBensContribuinte / contribuintes.size()) * 1.5;
+		System.out.println(limiarRiquezaContribuintes);
+	}
+	
+	private boolean checaString (String nome, String numeroContribuinte) {
+		if (nome == null || numeroContribuinte == null || nome.equals("") || numeroContribuinte.equals("")) return false;
+		return true;
+	}
+	
+	private boolean checaValor (double valor) {
+		if (valor < 0) {
+			return false;
+		}
+		return true;
+	}
+}

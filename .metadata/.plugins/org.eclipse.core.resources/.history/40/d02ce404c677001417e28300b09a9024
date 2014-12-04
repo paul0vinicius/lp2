@@ -1,0 +1,25 @@
+package lp2.lab07;
+
+public class Medicos extends Contribuinte {
+	
+	public Medicos(String nomeContribuinte, String numeroContribuinte, int pacientes, double gastosCongressos) throws Exception {
+		super(nomeContribuinte, numeroContribuinte);
+	}
+
+	@Override
+	public double calculaTributacao(double pacientesAtendidos) {
+		return pacientesAtendidos * 10.0;
+	}
+
+	@Override
+	public double descontoTributacao(double gastosCongressos) {
+		return gastosCongressos;
+	}
+
+	@Override
+	public double sinaisRiquezaExterior() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

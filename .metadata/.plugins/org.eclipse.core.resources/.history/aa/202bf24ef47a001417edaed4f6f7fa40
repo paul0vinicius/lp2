@@ -1,0 +1,11 @@
+package lp2.lab08;
+
+import java.util.List;
+
+public interface Estrategia {
+	
+	public abstract double calculaNotaNaMosca ();
+	
+	public abstract void selecionaComentariosRelevantes ();
+	
+}

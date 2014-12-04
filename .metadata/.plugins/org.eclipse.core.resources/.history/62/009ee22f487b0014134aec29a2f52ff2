@@ -1,0 +1,67 @@
+package lp2.lab08;
+
+import java.util.*;
+import org.junit.*;
+
+public class TestaProduto {
+	private Opiniao opiniao1, opiniao2, opiniao3, opiniao4, opiniao5;
+	private final String COMENTARIO1 = "Amei, achei digno de Oscar!";
+	private final String COMENTARIO2 = "Interessante e inovador o produto. Bastante útil na cozinha.";
+	private final String COMENTARIO3 = "É realmente gratificante ver alguns produtos de boa qualidade.";
+	private final String COMENTARIO4 = "Um lixo, pelo amor de Deus! RETIREM ESSE PRODUTO AGORA DAS PRATILEIRAS.";
+	private final String COMENTARIO5 = "Horrível, pior produto que já vi.";
+	private final int NUMERO_OPINIOES = 5;
+	private final int NOTA2 = 2;
+	private final int NOTA1 = 1;
+	private final int NOTA0 = 0;
+	private final int NOTA_MENOS1 = -1;
+	private final int NOTA_MENOS2 = -2;
+	private Produto produtoTeste;
+	private Estrategia estrategiaSimples = new EstrategiaSimples();
+	private Estrategia estrategiaSazonal = new EstrategiaSazonal();
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		produtoTeste = new Produto();
+		opiniao1 = new Opiniao(NOTA2, COMENTARIO1);
+		
+		Thread.sleep(2000);
+		
+		opiniao2 = new Opiniao(NOTA1, COMENTARIO2);
+		
+		Thread.sleep(2000);
+		
+		opiniao3 = new Opiniao(NOTA0, COMENTARIO3);
+		
+		Thread.sleep(2000);
+		
+		opiniao4 = new Opiniao(NOTA_MENOS1, COMENTARIO4);
+		
+		Thread.sleep(2000);
+		
+		opiniao5 = new Opiniao(NOTA_MENOS2, COMENTARIO5);
+	}
+	
+	@Test
+	public void testaAdicionaOpinioes () {
+		adicionaOpinioes();
+		Assert.assertEquals(NUMERO_OPINIOES, produtoTeste.getOpinioesProduto().size());
+	}
+	
+	@Test
+	public void testaSetFormaVisualizacao () {
+		produtoTeste.setFormaVisualizacao(estrategiaSimples);
+		adicionaOpinioes();
+		Assert.assertEquals(0, produtoTeste.getNotaNaMosca(), 0.01);
+		
+	}
+	
+	private void adicionaOpinioes() {
+		produtoTeste.adicionaOpinioes(opiniao1);
+		produtoTeste.adicionaOpinioes(opiniao2);
+		produtoTeste.adicionaOpinioes(opiniao3);
+		produtoTeste.adicionaOpinioes(opiniao4);
+		produtoTeste.adicionaOpinioes(opiniao5);
+	}
+
+}

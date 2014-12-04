@@ -1,0 +1,36 @@
+package lp2.lab03;
+
+import java.util.Scanner;
+
+/* Autor: Paulo Vinícius da Silva Soares */
+
+public class JogoDaVelhaModularizado {
+	public static void main(String args[]){
+		Scanner entrada = new Scanner(System.in);
+		int jogadas = 0;
+		int[] coordenada;
+		
+		while(true){
+			if(jogadas == 9){
+				break;
+			}
+			System.out.println("\nINSIRA AS COORDENADAS");
+			coordenada = EntradaDeDados(jogadas, entrada);
+		}
+	}
+	
+	private static int[] EntradaDeDados(int jogadas, Scanner sc){
+		int[] coordenada = new int[2];
+        if((jogadas % 2) == 1){
+        	System.out.print("PLAYER 2\nLINHA: ");
+        }
+        else{
+        	System.out.print("PLAYER 1\nLINHA: ");
+        }
+
+		coordenada[0] = sc.nextInt();
+        System.out.print("COLUNA: ");
+        coordenada[1] = sc.nextInt();
+        return coordenada;
+	}
+}

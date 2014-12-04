@@ -1,0 +1,15 @@
+package lp2.lab08;
+
+import java.util.List;
+
+public abstract class Produto {
+	protected List<Opiniao> comentarios;
+	protected double notaNaMosca;
+	protected String[] comentariosMaisRelevantes;
+	
+	public Produto (Opiniao opiniao) {
+		comentarios.add(opiniao);
+		this.comentariosMaisRelevantes = new String[2];
+	}
+	
+}

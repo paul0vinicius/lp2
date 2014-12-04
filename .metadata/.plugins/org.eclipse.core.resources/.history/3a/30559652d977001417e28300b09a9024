@@ -1,0 +1,91 @@
+package lp2.lab07;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Medicos extends Contribuinte {
+	private int pacientes;
+	private double gastosCongressos;
+	private static double somaRiquezasMed;
+	private static double limiarRiquezaMed;
+	private static List<Medicos> medicos = new ArrayList<Medicos>();
+	
+	public Medicos(String nomeContribuinte, String numeroContribuinte, int pacientes, double gastos, double valorCarro, double valorCasa) throws Exception {
+		super(nomeContribuinte, numeroContribuinte, valorCarro, valorCasa);
+		if (gastos < 0 || pacientes < 0) throw new Exception("O valor dos gastos e pacientes não podem ser negativos.");
+		this.pacientes = pacientes;
+		this.gastosCongressos = gastos;
+		calculaTributacao();
+		descontoTributacao();
+		if (!verificaSeExiste(nomeContribuinte, numeroContribuinte)) {
+			medicos.add(this);
+			numeroDeContribuintes++;
+		}
+	}
+
+	@Override
+	protected void calculaTributacao() {
+		tributacao = pacientes * 10;
+	}
+
+	@Override
+	protected void descontoTributacao() {
+		descontos = gastosCongressos;
+	}
+
+	@Override
+	public void limiarRiqueza () {
+		atualizaContribuintesLimiarRiqueza();
+	}
+	
+	private boolean verificaSeExiste (String nome, String numero) {
+		for (Medicos a: medicos) {
+			if (a.getNomeContribuinte().equals(nome) || a.getNumeroContribuinte().equals(numero)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private static void atualizaLimiarRiqueza () {
+		somaRiquezasMed = 0.0;
+		limiarRiquezaMed = 0.0;
+		for (Medicos a: medicos) {
+			somaRiquezasMed += (a.sinaisRiqueza);
+			System.out.println(somaRiquezasMed);
+		}
+		limiarRiquezaMed = (somaRiquezasMed / medicos.size()) * 1.5;
+	}
+	
+	public static void atualizaContribuintesLimiarRiqueza () {
+		atualizaLimiarRiqueza();
+		for (Medicos a: medicos) {
+			if (a.sinaisRiqueza >= limiarRiquezaMed) {
+				a.setRiquezaExcessiva(true);
+			}
+		}
+	}
+	
+	public static int getNumeroDeMedicos () {
+		return medicos.size();
+	}
+	
+	@Override
+	public boolean equals (Object obj) {
+		if (!(obj instanceof Medicos)) {
+			return false;
+		}
+		Medicos outroMedico = (Medicos) obj;
+		return outroMedico.getNomeContribuinte().equals(getNomeContribuinte()) && outroMedico.getNumeroContribuinte().equals(getNumeroContribuinte());
+	}
+	
+	public static String consultaContribuinte (String nome, String numeroContr) {
+		for (Medicos a: medicos) {
+			if (nome.equals(a.getNomeContribuinte()) && numeroContr.equals(a.getNumeroContribuinte())) {
+				return "Nome: " + a.getNomeContribuinte() + " - Número de contribuinte: " + a.getNumeroContribuinte() +
+						"\nTributação bruta: R$ " + a.getTributacao() + "\nDescontos: R$ " + a.getDescontos() + "\nTributação Total: R$ " + a.getTributacaoTotal() + "\n";
+			}
+		}
+		return "Pessoa não encontrada.";
+	}
+}

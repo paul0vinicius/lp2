@@ -1,0 +1,50 @@
+package lp2.lab08;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Produto {
+	protected List<Opiniao> opinioesProduto;
+	protected List<Opiniao> opinioesMaisRelevantesSazonal;
+	protected double notaNaMosca;
+	protected String[] comentariosMaisRelevantes;
+	private Estrategia formaAvaliar = new EstrategiaSimples();
+	private EstrategiaSazonal estrategiaSazonal = new EstrategiaSazonal();
+	
+	public Produto () {
+		opinioesProduto = new ArrayList<Opiniao>();
+		opinioesMaisRelevantesSazonal = new ArrayList<Opiniao>();
+		this.comentariosMaisRelevantes = new String[2];
+	}
+	
+	public void adicionaOpinioes (Opiniao opiniao) {
+		opinioesProduto.add(opiniao);
+	}
+	
+	public double getNotaNaMosca () {
+		return formaAvaliar.calculaNotaNaMosca(opinioesProduto);
+	}
+	
+	public String getComentarios () throws Exception {
+		String comentarios = formaAvaliar.selecionaComentariosRelevantes(opinioesProduto);
+		if (comentarios == null) {
+			throw new Exception("Não existem comentários relevantes.");
+		}
+		return comentarios;
+	}
+	
+	public List<Opiniao> getOpinioesRelevantesSazonal () {
+		return estrategiaSazonal.
+	}
+	
+	public List<Opiniao> getOpinioesProduto () {
+		return opinioesProduto;
+	}
+	
+	public void setFormaVisualizacao (Estrategia novaEstrategia) {
+		formaAvaliar = novaEstrategia;
+	}
+	
+	
+	
+}

@@ -1,0 +1,45 @@
+package lp2.lab07;
+
+import org.junit.*;
+
+public class TestaMedicos {
+	private Medicos med1, med2, med3;
+	private final int NAO_TEM_CARRO = 0, NAO_TEM_CASA = 0;
+	private final double VALOR_PADRAO_CASA = 50000, VALOR_PADRAO_CARRO = 20000, VALOR_ACIMA_CASA = 800000, VALOR_ACIMA_CARRO = 200000;
+	private final int PACIENTES1 = 2500, PACIENTES2 = 10000, PACIENTES3 = 8000;
+	private final double GASTOS_CONGRESSOS1 = 7000, GASTOS_CONGRESSOS2 = 15000, GASTOS_CONGRESSOS3 = 43440;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		med1 = new Medicos("Adriano", "12345", PACIENTES1, GASTOS_CONGRESSOS1, NAO_TEM_CARRO, NAO_TEM_CASA);
+		med2 = new Medicos("João", "91234", PACIENTES2, GASTOS_CONGRESSOS2, VALOR_ACIMA_CARRO, VALOR_ACIMA_CASA);
+		med3 = new Medicos("Adriana", "81329", PACIENTES3, GASTOS_CONGRESSOS3, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+	}
+	
+	@Test
+	public void testaConstrutor () {
+		try {
+			new Medicos("Fer", "123-4", -1, GASTOS_CONGRESSOS1, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque os pacientes não podem ser negativos.");
+		} catch (Exception e) {
+			Assert.assertEquals("O valor dos gastos e pacientes não podem ser negativos.", e.getMessage());
+		}
+		
+		try {
+			new Medicos("Fer", "123-4", PACIENTES1, -1, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque os pacientes não podem ser negativos.");
+		} catch (Exception e) {
+			Assert.assertEquals("O valor dos gastos e pacientes não podem ser negativos.", e.getMessage());
+		}
+		
+		Assert.assertEquals("Ricardo", med1.getNomeContribuinte());
+		Assert.assertEquals("123-4", med1.getNumeroContribuinte());
+		Assert.assertEquals(VALOR_PADRAO_CARRO, med1.getValorcarro(), 0.1);
+		Assert.assertEquals(VALOR_PADRAO_CASA, med1.getValorcasa(), 0.1);
+		Assert.assertEquals(NAO_TEM_CARRO, med2.getValorcarro(), 0.1);
+		Assert.assertEquals(NAO_TEM_CASA, med2.getValorcasa(), 0.1);
+		Assert.assertEquals(VALOR_ACIMA_CARRO, med3.getValorcarro(), 0.1);
+		Assert.assertEquals(VALOR_ACIMA_CASA, med3.getValorcasa(), 0.1);
+		Assert.assertEquals(3, Medicos.getNumeroDeMedicos());
+	}
+}

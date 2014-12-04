@@ -1,0 +1,36 @@
+package lp2.lab07;
+
+import org.junit.*;
+
+public class TestaProfessores {
+	private Professores prof1, prof2, prof3;
+	private final int NAO_TEM_CARRO = 0, NAO_TEM_CASA = 0;
+	private final double VALOR_PADRAO_CASA = 50000, VALOR_PADRAO_CARRO = 20000, VALOR_ACIMA_CASA = 800000, VALOR_ACIMA_CARRO = 200000;
+	private final double DESPESAS1 = 3080.34, DESPESAS2 = 1500, DESPESAS3 = 1084.39;
+	private final double SALARIO1 = 3000, SALARIO2 = 1500, SALARIO3 = 1084.39;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		prof1 = new Professores("Gretchen", "12345", SALARIO1, DESPESAS1, VALOR_ACIMA_CARRO, VALOR_ACIMA_CASA);
+		prof2 = new Professores("Ximbinha", "12934", SALARIO2, DESPESAS2, VALOR_PADRAO_CARRO, VALOR_PADRAO_CASA);
+		prof3 = new Professores("Joelma", "24560", SALARIO3, DESPESAS3, NAO_TEM_CARRO, NAO_TEM_CASA);
+	}
+	
+	@Test
+	public void testaConstrutor () throws Exception {
+		try {
+			new Professores("Joelma", "1234", -1, DESPESAS1, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque os valores de salário e despesas não podem ser negativos.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os valores não podem ser negativos.", e.getMessage());
+		}
+		
+		try {
+			new Professores("Joelma", "1234", SALARIO1, -1, NAO_TEM_CARRO, NAO_TEM_CASA);
+			Assert.fail("Deve lançar exceção porque os valores de salário e despesas não podem ser negativos.");
+		} catch (Exception e) {
+			Assert.assertEquals("Os valores não podem ser negativos.", e.getMessage());
+		}
+	}
+	
+}

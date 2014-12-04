@@ -1,0 +1,97 @@
+package lp2.lab08;
+
+import org.junit.*;
+
+public class TestaProduto {
+	private Opiniao opiniao1, opiniao2, opiniao3, opiniao4, opiniao5;
+	private Produto produtoTeste;
+	private Estrategia estrategiaSimples = new EstrategiaSimples();
+	private Estrategia estrategiaSazonal = new EstrategiaSazonal();
+	private final String COMENTARIO1 = "Amei, achei digno de Oscar!";
+	private final String COMENTARIO2 = "Interessante e inovador. Bastante útil na cozinha.";
+	private final String COMENTARIO3 = "Nada impressionante.";
+	private final String COMENTARIO4 = "Um lixo, pelo amor de Deus! RETIREM ESSE PRODUTO AGORA DAS PRATELEIRAS.";
+	private final String COMENTARIO5 = "Horrível, pior produto que já vi.";
+	private final int NUMERO_OPINIOES = 5;
+	private int notaProduto;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		produtoTeste = new Produto();
+		setNotaProduto(2);
+		opiniao1 = new Opiniao(notaProduto, COMENTARIO1);
+		
+		Thread.sleep(2000);
+		
+		setNotaProduto(1);
+		opiniao2 = new Opiniao(notaProduto, COMENTARIO2);
+		
+		Thread.sleep(2000);
+		
+		setNotaProduto(0);
+		opiniao3 = new Opiniao(notaProduto, COMENTARIO3);
+		
+		Thread.sleep(2000);
+		
+		setNotaProduto(-1);
+		opiniao4 = new Opiniao(notaProduto, COMENTARIO4);
+		
+		Thread.sleep(2000);
+		
+		setNotaProduto(-2);
+		opiniao5 = new Opiniao(notaProduto, COMENTARIO5);
+	}
+	
+	@Test
+	public void testaAdicionaOpinioes () {
+		adicionaOpinioes();
+		Assert.assertEquals(NUMERO_OPINIOES, produtoTeste.getOpinioesProduto().size());
+	}
+	
+	@Test
+	public void testaExcecoes () {
+		try {
+			produtoTeste.setFormaVisualizacao(estrategiaSimples);
+			produtoTeste.getComentarios();
+			Assert.fail("Deve retornar null, a lista de comentários está vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("Não existem comentários relevantes.", e.getMessage());
+		}
+		
+		try {
+			produtoTeste.setFormaVisualizacao(estrategiaSimples);
+			produtoTeste.getComentarios();
+			Assert.fail("Deve retornar null, a lista de comentários está vazia.");
+		} catch (Exception e) {
+			Assert.assertEquals("Não existem comentários relevantes.", e.getMessage());
+		}
+		
+		Assert.assertEquals(0, produtoTeste.getNotaNaMosca(), 0.01);
+		produtoTeste.adicionaOpinioes(opiniao1);
+		Assert.assertEquals(2, produtoTeste.getNotaNaMosca(), 0.01);
+	}
+	
+	@Test
+	public void testaSetFormaVisualizacao () throws Exception {
+		produtoTeste.setFormaVisualizacao(estrategiaSimples);
+		Assert.assertEquals(0, produtoTeste.getNotaNaMosca(), 0.01);
+		adicionaOpinioes();
+		Assert.assertEquals(0, produtoTeste.getNotaNaMosca(), 0.01);
+		produtoTeste.setFormaVisualizacao(estrategiaSazonal);
+		Assert.assertEquals(-1, produtoTeste.getNotaNaMosca(), 0.01);
+		
+	}
+	
+	private void adicionaOpinioes() {
+		produtoTeste.adicionaOpinioes(opiniao1);
+		produtoTeste.adicionaOpinioes(opiniao2);
+		produtoTeste.adicionaOpinioes(opiniao3);
+		produtoTeste.adicionaOpinioes(opiniao4);
+		produtoTeste.adicionaOpinioes(opiniao5);
+	}
+	
+	private void setNotaProduto (int nota) {
+		notaProduto = nota;
+	}
+
+}

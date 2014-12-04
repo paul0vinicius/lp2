@@ -1,0 +1,9 @@
+package lp2.lab07;
+
+public class MeuSistemaSimplesDeTributacao {
+	public static boolean sair;
+	
+	public static void main(String args[]) {
+		
+	}
+}

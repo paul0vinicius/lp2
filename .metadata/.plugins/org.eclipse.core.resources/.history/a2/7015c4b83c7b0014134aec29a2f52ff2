@@ -1,0 +1,52 @@
+package lp2.lab08;
+
+import org.junit.*;
+
+public class TestaOpiniao {
+	private final String COMENTARIO_VALIDO = "Achei o produto bastante eficiente, "
+			+ "rápido, simples de ser manuseado e muito prático.";
+	private final String COMENTARIO_INVALIDO = "Achei o produto bastante eficiente, "
+			+ "rápido, simples de ser manuseado e muito prático. Mas, infelizmente, "
+			+ "não pude adquirir um produto deste tipo devido ao seu preço. Por favor, "
+			+ "diminuam o preço para que pessoas como eu também possam ser incluídas na "
+			+ "lista de clientes felizes que possuem tal mercadoria. Abraços, Sonia.";
+	private final String STRING_VAZIA = "";
+	
+	
+//	@Before
+//	public void criaObjetos () {
+//		
+//	}
+	
+	@Test
+	public void testaConstrutor () {
+		try {
+			new Opiniao(-3, COMENTARIO_VALIDO);
+			Assert.fail("Deve lançar exceção: Nota Inválida.");
+		} catch (Exception e) {
+			Assert.assertEquals("A nota deve estar entre -2 e 2.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(3, COMENTARIO_VALIDO);
+			Assert.fail("Deve lançar exceção: Nota Inválida.");
+		} catch (Exception e) {
+			Assert.assertEquals("A nota deve estar entre -2 e 2.", e.getMessage());
+		}
+		
+		try {
+			new Opiniao(2, STRING_VAZIA);
+			Assert.fail("Deve lançar exceção: Comentário inválido.");
+		} catch (Exception e) {
+			Assert.assertEquals("O comentário não pode ser uma string vazia ou nulo.", e.getMessage());
+		}
+		
+		
+		try {
+			new Opiniao(2, null);
+			Assert.fail("Deve lançar exceção: Comentário inválido.");
+		} catch (Exception e) {
+			Assert.assertEquals("O comentário não pode ser uma string vazia ou nulo.", e.getMessage());
+		}
+	}
+}

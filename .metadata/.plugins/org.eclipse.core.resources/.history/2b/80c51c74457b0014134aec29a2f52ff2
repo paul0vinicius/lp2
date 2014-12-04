@@ -1,0 +1,31 @@
+package lp2.lab08;
+
+import java.util.*;
+
+import org.junit.*;
+
+public class TestaProduto {
+	private Opiniao opiniao1, opiniao2, opiniao3, opiniao4, opiniao5;
+	private final String comentario1 = "Amei, achei digno de Oscar!";
+	private final String comentario2 = "Interessante e inovador o produto. Bastante útil na cozinha.";
+	private final String comentario3 = "É realmente gratificante ver alguns produtos de boa qualidade.";
+	private final String comentario4 = "Um lixo, pelo amor de Deus! RETIREM ESSE PRODUTO AGORA DAS PRATILEIRAS.";
+	private final String comentario5 = "Horrível, pior produto que já vi.";
+	private final int nota1 = 2;
+	private final int nota2 = 1;
+	private final int nota3 = 0;
+	private final int nota4 = -1;
+	private final int nota5 = -2;
+	
+	@Before
+	public void criaObjetos () throws Exception {
+		opiniao1 = new Opiniao(nota1, comentario1);
+		
+		try {
+		    Thread.sleep(2000);                 //1000 milliseconds is one second.
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+	}
+
+}

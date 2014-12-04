@@ -1,0 +1,61 @@
+package lp2.lab08;
+
+import java.util.*;
+
+public abstract class EstrategiaSimples implements Estrategia  {
+	private Opiniao comentarioMaisRelevantePositivo;
+	private Opiniao comentarioMaisRelevanteNegativo;
+	private String [] comentariosMaisRelevantes = new String[2];
+
+	@Override
+	public double calculaNotaNaMosca(List<Opiniao> opinioes) {
+		int soma = 0;
+		for (Opiniao a: opinioes) {
+			soma += a.getNotaProduto();
+		}
+		int media = soma / opinioes.size();
+		return media;
+	}
+
+	@Override
+	public String[] selecionaComentariosRelevantes(List<Opiniao> opinioes) {
+		if (opinioes.size() < 1) {
+			return null;
+		}
+		if (opinioes.size() == 1) {
+			comentariosMaisRelevantes[0] = opinioes.get(0).getComentario();
+			comentariosMaisRelevantes[1] = "";
+			return comentariosMaisRelevantes;
+		}
+		int maior = opinioes.get(0).getNotaProduto();
+		int menor = opinioes.get(0).getNotaProduto();
+		comentarioMaisRelevantePositivo = opinioes.get(0);
+		comentarioMaisRelevantePositivo = opinioes.get(0);
+		for (Opiniao a: opinioes) {
+			if (a.getNotaProduto() > maior) {
+				maior = a.getNotaProduto();
+				comentarioMaisRelevantePositivo = a;
+			}
+			else if (a.getNotaProduto() == maior) {
+				if (a.getDatadoComentario().before(comentarioMaisRelevantePositivo.getDatadoComentario())) {
+					comentarioMaisRelevantePositivo = a;
+				}
+			}
+			
+			if (a.getNotaProduto() < menor) {
+				menor = a.getNotaProduto();
+				comentarioMaisRelevanteNegativo = a;
+			}
+			
+			else if (a.getNotaProduto() == menor) {
+				if (a.getDatadoComentario().before(comentarioMaisRelevanteNegativo.getDatadoComentario())) {
+					comentarioMaisRelevanteNegativo = a;
+				}
+			}
+		}
+		comentariosMaisRelevantes[0] = comentarioMaisRelevantePositivo.getComentario();
+		comentariosMaisRelevantes[1] = comentarioMaisRelevanteNegativo.getComentario();
+		
+		return comentariosMaisRelevantes;
+	}	
+}

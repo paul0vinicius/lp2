@@ -1,0 +1,30 @@
+package lp2.lab07;
+
+import java.util.*;
+
+public class MeuSistemaSimplesDeTributacao {
+	private static boolean sair;
+	private static Scanner entradaInt;
+	private static Scanner entradaString;
+	
+	public static void main(String args[]) {
+		entradaInt = new Scanner(System.in);
+		entradaString = new Scanner(System.in);
+		
+		while (!sair) {
+			System.out.println("-------- SISTEMA DE CADASTRO DE TRIBUTAÇÃO --------\n");
+			System.out.println("Qual profissão você exerce?");
+			System.out.println("1. Taxista");
+			System.out.println("2. Caminhoneiro");
+			System.out.println("3. Médico");
+			System.out.println("4. Professor");
+			int opcao = entradaInt.nextInt();
+			
+			switch(opcao) {
+			case 1:
+				System.out.println("Digite o nome de contribuinte: ");
+				
+			}
+		}
+	}
+}

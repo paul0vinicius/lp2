@@ -1,0 +1,46 @@
+package lp2.lab08;
+
+import java.util.*;
+
+public class Opiniao {
+	private int notaProduto;
+	private String comentario;
+	private GregorianCalendar dataDoComentario;
+	
+	public Opiniao (int nota, String comentario) throws Exception {
+		lancaExcecoes(nota, comentario);
+		this.notaProduto = nota;
+		this.comentario = comentario;
+		this.dataDoComentario = new GregorianCalendar();
+	}
+	
+	public int getNotaProduto () {
+		return notaProduto;
+	}
+	
+	public String getComentario () {
+		return comentario;
+	}
+
+	public Date getDataDoComentario () {
+		return dataDoComentario.getTime();
+	}
+	
+	@Override
+	public String toString () {
+		return "Nota: " + getNotaProduto() + "\nComentário: " + getComentario();
+	}
+	
+	private void lancaExcecoes (int nota, String comentario) throws Exception {
+		if (!(nota >= -2 && nota <= 2)) {
+			throw new Exception("A nota deve estar entre -2 e 2.");
+		}
+		if (comentario.length() > 140) {
+			throw new Exception("Os caracteres não devem ultrapassar a quantidade de 140.");
+		}
+		else if (comentario == "" || comentario == "") {
+			throw new Exception("O comentário não pode ser uma string vazia ou nulo.");
+		}
+	}
+
+}
